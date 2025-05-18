@@ -25,7 +25,7 @@
                                 <i class="fas fa-recycle me-1"></i> Recyclable
                             </span>
                         {% endif %}
-                        
+
                         {% if item.is_ewaste %}
                             <span class="badge bg-warning text-dark ms-1">
                                 <i class="fas fa-laptop me-1"></i> E-Waste
@@ -33,23 +33,23 @@
                         {% endif %}
                     </div>
                 </div>
-                
+
                 <div class="mb-3">
                     <span class="badge bg-secondary p-2">
                         <i class="material-icon" data-material="{{ item.material }}"></i>
                         {{ item.material }}
                     </span>
                 </div>
-                
+
                 <h5>Description</h5>
                 <p class="card-text">{{ item.description }}</p>
-                
+
                 <h5>Location</h5>
                 <p class="card-text">
                     <i class="fas fa-map-marker-alt me-2"></i>
                     {{ item.location }}
                 </p>
-                
+
                 <h5>Contact Information</h5>
                 <div class="row">
                     {% if item.contact_email %}
@@ -60,7 +60,7 @@
                             </a>
                         </div>
                     {% endif %}
-                    
+
                     {% if item.contact_phone %}
                         <div class="col-md-6 mb-2">
                             <a href="tel:{{ item.contact_phone }}" class="btn btn-outline-primary d-block">
@@ -70,14 +70,14 @@
                         </div>
                     {% endif %}
                 </div>
-                
+
                 {% if not item.sent_to_municipality and item.material|lower == 'plastic' %}
                     <div class="mt-4">
                         <div class="alert alert-info mb-3">
                             <i class="fas fa-info-circle me-2"></i>
                             This plastic item can be sent to the municipality for raw material processing.
                         </div>
-                        
+
                         <form method="POST" action="{{ url_for('send_to_municipality', item_id=item.id) }}">
                             <button type="submit" class="btn btn-success d-block w-100">
                                 <i class="fas fa-building me-2"></i>
@@ -86,7 +86,7 @@
                         </form>
                     </div>
                 {% endif %}
-                
+
                 {% if item.sent_to_municipality %}
                     <div class="alert alert-info mt-4">
                         <div class="d-flex">
@@ -109,7 +109,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-6">
         <div class="card mb-4">
             <div class="card-header bg-success bg-opacity-25">
@@ -124,11 +124,11 @@
                     {{ item.summary|safe }}
                 </div>
                 {% endif %}
-                
+
                 <div class="ai-analysis-container p-3 bg-dark bg-opacity-25 rounded mb-4 white-space-pre-line">
                     {{ item.full_analysis|safe }}
                 </div>
-                
+
                 {% if item.material_detection %}
                 <div class="mt-3 mb-3">
                     <h6 class="border-bottom pb-2">Computer Vision Analysis</h6>
@@ -143,7 +143,7 @@
                                 <div>Analysis method: <span class="fw-bold">{{ item.material_detection.analysis_method }}</span></div>
                             </div>
                         </div>
-                        
+
                         {% if item.material_detection.composition %}
                         <div class="mt-3">
                             <small class="text-muted d-block mb-2">Material composition:</small>
@@ -172,13 +172,13 @@
                     </div>
                 </div>
                 {% endif %}
-                
+
                 <button id="copy-analysis" class="btn btn-outline-secondary btn-sm">
                     <i class="fas fa-copy me-1"></i> Copy Analysis
                 </button>
             </div>
         </div>
-        
+
         <div class="card mb-4">
             <div class="card-header bg-info bg-opacity-25">
                 <h5 class="mb-0">
@@ -238,7 +238,7 @@
                 {% endif %}
             </div>
         </div>
-        
+
         <div class="card">
             <div class="card-header bg-warning bg-opacity-25">
                 <h5 class="mb-0">
@@ -254,7 +254,7 @@
                         Track Waste Journey
                     </a>
                     {% endif %}
-                    
+
                     {% if item.is_recyclable and not item.sent_to_municipality and not item.is_dropped_off %}
                     <form method="POST" action="{{ url_for('send_to_municipality', item_id=item.id) }}">
                         <button type="submit" class="btn btn-outline-success d-block w-100">
@@ -263,17 +263,45 @@
                         </button>
                     </form>
                     {% endif %}
-                    
+
                     <a href="{{ url_for('index') }}" class="btn btn-outline-primary">
                         <i class="fas fa-camera me-2"></i>
                         Analyze Another Item
                     </a>
-                    
+
                     <a href="{{ url_for('marketplace') }}" class="btn btn-outline-success">
                         <i class="fas fa-store me-2"></i>
                         Return to Marketplace
                     </a>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                
+                <div class="alert {% if item.material|lower in ['paper', 'metal', 'electronic', 'e-waste'] %}alert-success{% else %}alert-danger{% endif %}">
+                            <h6>
+                                {% if item.material|lower in ['paper', 'metal', 'electronic', 'e-waste'] %}
+                                    <i class="fas fa-check-circle me-2"></i>Recyclable
+                                {% else %}
+                                    <i class="fas fa-exclamation-triangle me-2"></i>Not Recyclable
+                                {% endif %}
+                            </h6>
+                            <p>
+                                {% if item.material|lower in ['paper', 'metal', 'electronic', 'e-waste'] %}
+                                    This item is recyclable. Please follow the recycling instructions below.
+                                {% else %}
+                                    Based on our analysis, this item is not recyclable through conventional channels. Please dispose of it according to your local waste management guidelines.
+                                {% endif %}
+                            </p>
+</div>
             </div>
         </div>
     </div>
