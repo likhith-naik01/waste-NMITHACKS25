@@ -187,7 +187,7 @@ def detect_material(image_path):
             material_composition["plastic"] = {"confidence": 0.5, "percentage": 100}
         
         # Calculate recyclability based on material composition
-        recyclable_materials = ["paper", "metal", "electronic", "e-waste"]
+        recyclable_materials = ["paper", "metal", "electronic", "e-waste", "plastic"]
         recyclability_score = 0
         
         # Check if any of the detected materials are in our recyclable list
@@ -195,6 +195,10 @@ def detect_material(image_path):
             if material.lower() in recyclable_materials:
                 recyclability_score = 1.0  # Set to maximum if any recyclable material is found
                 break
+        
+        # Ensure e-waste and plastic are always marked as recyclable
+        if primary_material.lower() in ["e-waste", "electronic", "plastic"]:
+            recyclability_score = 1.0
         
         # If recyclability score is very low, give it a minimum reasonable value
         # This ensures items don't appear completely unrecyclable

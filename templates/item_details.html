@@ -286,9 +286,9 @@
         <div class="card">
             <div class="card-body">
                 
-                <div class="alert {% if item.material|lower in ['paper', 'metal', 'electronic', 'e-waste'] %}alert-success{% else %}alert-danger{% endif %}">
+                <div class="alert {% if item.material|lower in ['paper', 'metal', 'electronic', 'e-waste', 'plastic'] %}alert-success{% else %}alert-danger{% endif %}">
                             <h6>
-                                {% if item.material|lower in ['paper', 'metal', 'electronic', 'e-waste'] %}
+                                {% if item.material|lower in ['paper', 'metal', 'electronic', 'e-waste', 'plastic'] %}
                                     <i class="fas fa-check-circle me-2"></i>Recyclable
                                 {% else %}
                                     <i class="fas fa-exclamation-triangle me-2"></i>Not Recyclable
