@@ -196,8 +196,8 @@ def detect_material(image_path):
                 recyclability_score = 1.0  # Set to maximum if any recyclable material is found
                 break
         
-        # Ensure e-waste and plastic are always marked as recyclable
-        if primary_material.lower() in ["e-waste", "electronic", "plastic"]:
+        # Ensure paper, metal, e-waste and plastic are always marked as recyclable
+        if primary_material.lower() in ["paper", "metal", "e-waste", "electronic", "plastic"]:
             recyclability_score = 1.0
         
         # If recyclability score is very low, give it a minimum reasonable value
